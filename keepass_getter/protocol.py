@@ -12,7 +12,7 @@ def associate(requestor):
     key = crypto.getRandomKey()
     input_data = {
         'RequestType': 'associate',
-        'Key': key.decode('ascii')
+        'Key': key.decode('utf-8')
     }
     output = requestor(key, input_data, None, None)
     return key, output['Id']
@@ -31,7 +31,7 @@ def getLogins(url, id_, key, requestor, print_output=False):
     iv = crypto.getRandomIV()
     input_data = {
         'RequestType': 'get-logins',
-        'Url': crypto.encrypt(url, key, iv).decode('ascii')
+        'Url': crypto.encrypt(url, key, iv).decode('utf-8')
     }
     output = requestor(key, input_data, id_, iv=iv)
     decrypted = [
@@ -57,27 +57,27 @@ class Requestor(object):
             iv = iv or crypto.getRandomIV()
             standard_data = {
                 'Id': id_,
-                'Nonce': iv.decode('ascii'),
-                'Verifier': getVerifier(iv, key).decode('ascii')
+                'Nonce': iv.decode('utf-8'),
+                'Verifier': getVerifier(iv, key).decode('utf-8')
             }
         return dict(standard_data, **input_data)
 
     def processResponse(self, response, key):
         if response.status_code != 200:
-            raise StandardError('Failed to get a response', response)
+            raise ValueError('Failed to get a response', response)
         output = response.json()
         if not output['Success']:
-            raise StandardError(
+            raise ValueError(
                 'keepass returned a unsuccessful response', response)
 
         if not checkVerifier(key, output['Nonce'], output['Verifier']):
-            raise StandardError('Failed to verify response', response)
+            raise ValueError('Failed to verify response', response)
         return output
 
     def getAndSaveNewAssociation(self, config):
         key, id_ = associate(self)
         config['Session']['ID']=id_
-        config['Session']['KEY']=key.decode('ascii')
+        config['Session']['KEY']=key.decode('utf-8')
         path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config')
         with open(path, 'w') as configfile:
             config.write(configfile)
@@ -88,4 +88,4 @@ def getVerifier(iv, key):
 
 
 def checkVerifier(key, iv, verifier):
-    return verifier.encode('ascii') == crypto.encrypt(iv, key, iv)
+    return verifier.encode('utf-8') == crypto.encrypt(iv, key, iv)

@@ -16,7 +16,7 @@ class Session(object):
         config.read(path)
         id_ = config['Session']['ID']
         key = config['Session']['key']
-        key_byte = key.encode('ascii')
+        key_byte = key.encode('utf-8')
         requestor = protocol.Requestor(config['KeepassHTTP']['url'])
         if not id_ and not key:
             print("No previous association. Loading new association")

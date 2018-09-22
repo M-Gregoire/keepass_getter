@@ -14,7 +14,7 @@ PAD_SIZE = 128 # in bits
 def pad(data, size=PAD_SIZE): # size is in bits; 16 bytes = 128 bits
     padder = padding.PKCS7(size).padder()
     if isinstance(data, str):
-        data = data.encode('ascii')
+        data = data.encode('utf-8')
     padded_data = padder.update(data)
     return padded_data + padder.finalize()
 
