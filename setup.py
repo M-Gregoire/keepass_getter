@@ -7,6 +7,6 @@ setup(name='keepass_getter',
       author='Grégoire Martinache',
       license='Apache-2.0',
       packages=['keepass_getter'],
-      install_requires=['configparser', 'requests'],
+      install_requires=['configparser', 'requests', 'cryptography'],
       include_package_data=True,
       )
