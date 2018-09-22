@@ -1,12 +1,14 @@
 language: python
 python: 3.6
-
 install:
-  - pip install coveralls nose
-  - pip install .
-
+- pip install coveralls nose
+- pip install .
 script:
-  - nosetests --with-coverage --cover-package=keepass_getter
-
+- nosetests --with-coverage --cover-package=keepass_getter
 after_success:
-  - coveralls
+- coveralls
+deploy:
+  provider: pypi
+  user: M-Gregoire
+  password:
+    secure: bkHbbisZR2jysMXA6lRg++vJWou3+9Ln1SwqzOm8/4yiLZzKAACYmvmQGJjBRIY5GhUdx0VJsUAvz6Wr09yWy1Ru97OOF3eHdphUGOgZVSxQI2tr726Ixc4coVo8tBGUIBayx2r3v8IuxfUxCK3bbijABkoUD8DUIdWgKh6x9paNCFWyE6+oQj5m7OHDObjhTLCzZsCqlBVJcaHVDE5Xp+LDUCE0fFR+h19cMJ+UnSYzDPrW6TFgnVYkopef+DxtEiJItgF7pjR2EprrbVmtW1r+N1Yp4ETTK/meq8A3kMdggiMrjuDCmVB2Wbo1Dl8+3ggljv+fnqDef96L5vBbl8dTsK+Cspvu4dGMS7QKSDGeJg3Q2waN5hf0fLK4K4R82Mq2+Tza8wCrAeVtGW+AsCGgPoWE5miFTC0vmJcj2jfBnqAhenqTVrvZ/yKJxWhpg7sNeEEG6dxlFHfQpoHkrkdWbct5wIKUdIew7gdFB/czguK27Rj7fAKO2ZybQfIUXCUIfZYqiQhH1//3MJ9JqPA76x3HV3e6UA7MlL0V49FGF3Q7cmRDXtT3pH+bMnUsaB7tRNy1ilJhRLQbH57Oy+i88PZiwr3ZCNQ1qptu+h0WFgeqmXKhvKJY6cUil6d070E99KV7qVZuoo1ZPXOJ1OzrJcKMplrEGZs/BuxzXi0=
