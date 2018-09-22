@@ -12,7 +12,7 @@ def associate(requestor):
     key = crypto.getRandomKey()
     input_data = {
         'RequestType': 'associate',
-        'Key': key.decode('utf-8')
+        'Key': key
     }
     output = requestor(key, input_data, None, None)
     return key, output['Id']
@@ -31,7 +31,7 @@ def getLogins(url, id_, key, requestor, print_output=False):
     iv = crypto.getRandomIV()
     input_data = {
         'RequestType': 'get-logins',
-        'Url': crypto.encrypt(url, key, iv).decode('utf-8')
+        'Url': crypto.encrypt(url, key, iv)
     }
     output = requestor(key, input_data, id_, iv=iv)
     decrypted = [
@@ -57,8 +57,8 @@ class Requestor(object):
             iv = iv or crypto.getRandomIV()
             standard_data = {
                 'Id': id_,
-                'Nonce': iv.decode('utf-8'),
-                'Verifier': getVerifier(iv, key).decode('utf-8')
+                'Nonce': iv,
+                'Verifier': getVerifier(iv, key)
             }
         return dict(standard_data, **input_data)
 
@@ -77,7 +77,7 @@ class Requestor(object):
     def getAndSaveNewAssociation(self, config):
         key, id_ = associate(self)
         config['Session']['ID']=id_
-        config['Session']['KEY']=key.decode('utf-8')
+        config['Session']['KEY']=key
         path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config')
         with open(path, 'w') as configfile:
             config.write(configfile)
@@ -88,4 +88,4 @@ def getVerifier(iv, key):
 
 
 def checkVerifier(key, iv, verifier):
-    return verifier.encode('utf-8') == crypto.encrypt(iv, key, iv)
+    return verifier == crypto.encrypt(iv, key, iv)

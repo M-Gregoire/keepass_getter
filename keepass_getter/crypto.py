@@ -39,14 +39,14 @@ def encrypt(data, key, iv):
     encryptor = cipher.encryptor()
     p = pad(data)
     res = encryptor.update(p) + encryptor.finalize()
-    return base64.b64encode(res)
+    return str(base64.b64encode(res), 'utf-8')
 
 
 def decrypt(data, key, iv):
     cipher = getCipher(key, iv)
     decryptor = cipher.decryptor()
     padded_data = decryptor.update(base64.b64decode(data)) + decryptor.finalize()
-    return unpad(padded_data)
+    return str(unpad(padded_data), 'utf-8')
 
 
 def getRandomBytes(size):
@@ -54,11 +54,11 @@ def getRandomBytes(size):
 
 
 def getRandomKey():
-    return getRandomBytes(KEY_SIZE)
+    return str(getRandomBytes(KEY_SIZE), 'utf-8')
 
 
 def getRandomIV():
-    return getRandomBytes(IV_SIZE)
+    return str(getRandomBytes(IV_SIZE), 'utf-8')
 
 
 def encryptDict(dct, key, iv):

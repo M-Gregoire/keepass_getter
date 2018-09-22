@@ -8,7 +8,7 @@ def getPassword(url,index=0):
     config.read(path)
     session = Session.start(config)
     results = session.getLogins(url)
-    return results[index]['Password'].decode('utf-8')
+    return results[index]['Password']
 
 def showPassword(url,index=0):
     print(getPassword(url,index))
