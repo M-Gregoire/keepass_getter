@@ -1,10 +1,11 @@
 import configparser
 import os
 from .session import Session
+from pathlib import Path
 
 def getPassword(url,index=0):
     config = configparser.ConfigParser()
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config')
+    path = os.path.join(Path.home(), '.keepass_getter_config')
     try:
         with open(path) as f:
             config.readfp(f)

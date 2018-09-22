@@ -1,6 +1,7 @@
 import configparser
 import os
 from . import protocol
+from pathlib import Path
 
 class Session(object):
     def __init__(self, key, id_, requestor):
@@ -12,7 +13,7 @@ class Session(object):
     @classmethod
     def start(self, config):
         config = configparser.ConfigParser()
-        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config')
+        path = os.path.join(Path.home(), '.keepass_getter_config')
         config.read(path)
         id_ = config['Session']['ID']
         key = config['Session']['key']
