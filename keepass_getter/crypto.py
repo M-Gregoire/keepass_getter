@@ -1,6 +1,5 @@
 import base64
 import os
-from . import util
 
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -61,13 +60,22 @@ def getRandomIV():
     return str(getRandomBytes(IV_SIZE), 'utf-8')
 
 
-def encryptDict(dct, key, iv):
-    def _encrypt(v):
-        return encrypt(v, key, iv)
-    return util.jsonMap(_encrypt, dct)
+def encryptDict(data, key, iv):
+    if isinstance(data, dict):
+        for k, v in data.items():
+                data[k] = encryptDict(v, key, iv)
+    elif isinstance(data, list):
+        return list(map(lambda p: encryptDict(p, key, iv), data))
+    else:
+        data = encrypt(data, key, iv)
+    return data
 
-
-def decryptDict(encrypted_dict, key, iv):
-    def _decrypt(v):
-        return decrypt(v, key, iv)
-    return util.jsonMap(_decrypt, encrypted_dict)
+def decryptDict(encrypted_data, key, iv):
+    if isinstance(encrypted_data, dict):
+        for k, v in encrypted_data.items():
+                encrypted_data[k] = decryptDict(v, key, iv)
+    elif isinstance(encrypted_data, list):
+        encrypted_data = list(map(lambda p: decryptDict(p, key, iv), encrypted_data))
+    else:
+        encrypted_data = decrypt(encrypted_data, key, iv)
+    return encrypted_data
