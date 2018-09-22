@@ -18,10 +18,10 @@ class Session(object):
         key = config['Session']['key']
         requestor = protocol.Requestor(config['KeepassHTTP']['url'])
         if not id_ and not key:
-            print("No previous association. Loading new association")
+            # No previous association. Loading new association
             key, id_ = requestor.getAndSaveNewAssociation(config)
         elif not protocol.testAssociate(id_, key, requestor):
-            print("Previous association failed. Loading new association")
+            # Previous association failed. Loading new association
             key, id_ = requestor.getAndSaveNewAssociation(config)
 
         return self(key, id_, requestor)
