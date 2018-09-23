@@ -13,7 +13,7 @@ class Session(object):
     @classmethod
     def start(self, config):
         config = configparser.ConfigParser()
-        path = os.path.join(Path.home(), '.keepass_getter_config')
+        path = Session.getConfigPath()
         config.read(path)
         id_ = config['Session']['ID']
         key = config['Session']['key']
@@ -26,6 +26,10 @@ class Session(object):
             key, id_ = requestor.getAndSaveNewAssociation(config)
 
         return self(key, id_, requestor)
+
+    @staticmethod
+    def getConfigPath():
+        return os.path.join(Path.home(), '.keepass_getter_config')
 
     def getLogins(self, url):
         return protocol.getLogins(url, self.id_, self.key, self.requestor)

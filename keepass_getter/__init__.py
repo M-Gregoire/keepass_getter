@@ -5,7 +5,7 @@ from pathlib import Path
 
 def getPassword(url,index=0):
     config = configparser.ConfigParser()
-    path = os.path.join(Path.home(), '.keepass_getter_config')
+    path = Session.getConfigPath()
     try:
         with open(path) as f:
             config.readfp(f)

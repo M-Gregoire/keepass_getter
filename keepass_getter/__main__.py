@@ -4,7 +4,7 @@ import os
 from . import session
 
 config = configparser.ConfigParser()
-path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config')
+path = session.Session.getConfigPath()
 config.read(path)
 session = session.Session.start(config)
 print('Initial configuration is done.')

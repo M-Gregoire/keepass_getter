@@ -1,6 +1,7 @@
 import requests
 import os
 from . import crypto
+from . import session
 
 def associate(requestor):
     """Send a new encryption key to keepass.
@@ -78,7 +79,7 @@ class Requestor(object):
         key, id_ = associate(self)
         config['Session']['ID']=id_
         config['Session']['KEY']=key
-        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config')
+        path = session.Session.getConfigPath()
         with open(path, 'w') as configfile:
             config.write(configfile)
         return key, id_
