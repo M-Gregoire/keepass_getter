@@ -1,4 +1,4 @@
-# keepass_getter [![Build Status](https://travis-ci.org/M-Gregoire/keepass_getter.svg?branch=master)](https://travis-ci.org/M-Gregoire/keepass_getter)
+# keepass_getter [![Build Status](https://travis-ci.org/M-Gregoire/keepass_getter.svg?branch=master)](https://travis-ci.org/M-Gregoire/keepass_getter) [![Coverage Status](https://coveralls.io/repos/github/M-Gregoire/keepass_getter/badge.svg?branch=master)](https://coveralls.io/github/M-Gregoire/keepass_getter?branch=master)
 keepass_getter allow you to retrieve passwords from your open KeePass database using [KeepassHttp](https://github.com/pfn/keepasshttp).  
 This Python module is designed to be easy to be called from bash. It can also be used in a Python package.  
 
